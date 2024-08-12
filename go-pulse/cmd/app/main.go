@@ -1,7 +1,7 @@
 package main
 
-import "fmt"
+import "github.com/benodiwal/go-pulse/internal/app"
 
 func main() {
-	fmt.Println("I am server")
+	app.Run()
 }
