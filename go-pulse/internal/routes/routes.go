@@ -3,6 +3,7 @@ package routes
 import (
 	"net/http"
 
+	"github.com/benodiwal/go-pulse/internal/handlers"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -19,4 +20,6 @@ func (r *Router) RegisterRoutes() {
 	r.Engine.GET("/health", func(ctx *gin.Context) {
 		ctx.String(http.StatusOK, "OK")
 	})
+
+	r.Engine.GET("/trigger", handlers.TriggerHandler)
 }
