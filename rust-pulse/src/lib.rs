@@ -5,10 +5,14 @@ pub mod configurations;
 pub mod routes;
 pub mod services;
 pub mod utils;
+pub mod logger;
+mod middlewares;
 
 pub async fn run(listener: TcpListener) -> Result<Server, std::io::Error> {
     let server = HttpServer::new(|| {
-        App::new().configure(routes::init)
+        App::new()
+        .wrap(middlewares::logger::logger_middleware())
+        .configure(routes::init)
     })
     .listen(listener)?
     .run();
