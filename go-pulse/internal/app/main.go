@@ -9,7 +9,10 @@ import (
 
 func Run() {
 	env.Load()
-	
+
 	router := routes.New()
+	router.RegisterMiddlewares()
+	router.RegisterRoutes()
+
 	router.Engine.Run(fmt.Sprintf(":%s", env.Read(env.PORT)))
 }
