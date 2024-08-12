@@ -6,6 +6,7 @@ mod receive;
 fn register_routes(cfg: &mut web::ServiceConfig) {
     cfg.service(health_check::health_check);
     cfg.service(trigger::trigger_go_server);
+    cfg.service(receive::receive_goroutine_data);
 }
 
 pub fn init(cfg: &mut web::ServiceConfig) {

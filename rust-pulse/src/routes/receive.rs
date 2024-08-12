@@ -1,5 +1,5 @@
 use actix_web::{post, web, HttpResponse, Responder};
-use redis::Commands;
+use redis::AsyncCommands;
 use serde::{Deserialize, Serialize};
 
 use crate::state::AppState;
@@ -15,11 +15,11 @@ pub async fn receive_goroutine_data(
     payload: web::Json<GoroutinePayload>,
     state: web::Data<AppState>
 ) -> impl Responder {
-    let mut conn = state.redis.lock().await.get_connection().unwrap();
+    let mut conn = state.redis.lock().await.get_multiplexed_async_connection().await.unwrap();
     let _: () = conn.rpush(
         &payload.identifier,
         &payload.timestamp
-    ).unwrap();
+    ).await.unwrap();
 
     HttpResponse::Ok().body("Data received and stored in Redis")
 }

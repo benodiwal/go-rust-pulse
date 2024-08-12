@@ -8,9 +8,11 @@ import (
 )
 
 const PORT = 0
+const RUST_PULSE_ENDPOINT = 1
 
 var keys = []string {
 	"PORT",
+	"RUST_PULSE_ENDPOINT",
 }
 
 func Load() {

@@ -9,6 +9,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/benodiwal/go-pulse/internal/env"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
@@ -50,12 +51,13 @@ func sendData(identifier string) {
         return
     }
 
-    resp, err := http.Post("http://localhost:8001/receive", "application/json", bytes.NewBuffer(jsonPayload))
+	endpoint := fmt.Sprintf("%s/receive", env.Read(env.RUST_PULSE_ENDPOINT))
+    resp, err := http.Post(endpoint, "application/json", bytes.NewBuffer(jsonPayload))
     if err != nil {
-        fmt.Printf("Error sending data to Rust: %v\n", err)
+        fmt.Printf("Error sending data to Rust Pulse: %v\n", err)
         return
     }
     defer resp.Body.Close()
 
-    fmt.Printf("Sent data to Rust: %v, Response: %v\n", payload, resp.Status)
+    fmt.Printf("Sent data to Rust Pulse: %v, Response: %v\n", payload, resp.Status)
 }
